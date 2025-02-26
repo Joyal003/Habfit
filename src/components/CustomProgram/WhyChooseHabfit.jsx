@@ -48,7 +48,7 @@ const WhyChooseHabfit = () => {
         Why Choose <span className="text-green-500">HABFIT?</span>
       </h2>
 
-      {/* Feature Boxes */}
+      {/* Feature Boxes  */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {features.map((feature) => (
           <div
