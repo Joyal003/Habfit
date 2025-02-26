@@ -5,7 +5,7 @@ import Programs from './Landing/Programs'
 import ConsultForm from './Landing/ConsultForm'
 import ReviewCards from './Landing/ReviewCards'
 import Contact from '../Common/Contact'
-import HabFitFeatures from './Landing/HabfitFeatures'
+
 
 const HomeLand = () => {
   return (
@@ -13,7 +13,6 @@ const HomeLand = () => {
         <Home/>
         <About/>
         <Programs/>
-        {/* <HabFitFeatures/> */}
         <ConsultForm/>
         <ReviewCards/>
         <Contact/>
