@@ -1,6 +1,7 @@
 import React from "react";
 import backgroundImage from "./../../assets/sa.png"; // Replace with actual image path
 import womanImage from "./../../assets/ww.jpg"; // Replace with actual image path
+import { Link } from "react-scroll";
 
 const PromoCard = () => {
   return (
@@ -31,9 +32,11 @@ const PromoCard = () => {
             attention. Take action now to secure your spot and start your
             journey to a stronger, healthier you.
           </p>
-          <button className="bg-green-400 text-black font-bold px-6 py-3 text-lg rounded-full hover:bg-green-500 transition-all">
-            GRAB OFFER
-          </button>
+          <Link to="bonus" smooth={true} duration={400}>
+              <button className="bg-green-500 text-black font-bold py-3 px-6 rounded-full text-lg hover:bg-green-600 transition">
+                GRAB OFFER
+              </button>
+            </Link>
         </div>
 
       </div>

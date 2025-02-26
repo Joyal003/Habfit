@@ -35,7 +35,7 @@ const RegistrationSection = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white px-4 py-8 md:py-12">
+    <div id="register" className="min-h-screen bg-black text-white px-4 py-8 md:py-12">
       <div className="max-w-8xl mx-auto">
         {/* Main Container */}
         <div
@@ -107,7 +107,7 @@ const RegistrationSection = () => {
             </div>
 
             {/* Right Side Form */}
-            <div className="w-full lg:w-1/2">
+            <div id="register" className="w-full lg:w-1/2">
               <div className="bg-black/40 md:backdrop-blur-sm  rounded-xl p-6">
                 <h2 className="text-xl md:text-2xl font-bold text-center text-green-400 mb-6">
                   Register Now

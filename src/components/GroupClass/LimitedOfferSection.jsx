@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-scroll";
 
 const LimitedOfferSection = () => {
   return (
@@ -29,9 +30,11 @@ const LimitedOfferSection = () => {
 
           {/* CTA Button */}
           <div className="flex justify-center mt-6">
-            <button className="bg-green-500 text-white font-bold py-3 px-6 rounded-full text-lg hover:bg-green-600 transition">
-              GRAB OFFER
-            </button>
+          <Link to="bonus" smooth={true} duration={400}>
+              <button className="bg-green-500 text-black font-bold py-3 px-6 rounded-full text-lg hover:bg-green-600 transition">
+                GRAB OFFER
+              </button>
+            </Link>
           </div>
         </div>
       </div>

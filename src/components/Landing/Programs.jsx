@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import image1 from '../../assets/Programs/4.png'
-import grpimage from '../../assets/Programs/3.png'
+import image1 from '../../assets/Programs/4.png';
+import grpimage from '../../assets/Programs/3.png';
 
-const program = [
+// Program data moved outside component to prevent recreation on each render
+const programData = [
   {
     title: "Weight Loss & Weight Gain Program",
-    image: image1,
+    image: image1, // Local image
     details: [
       "Customized program for home workouts",
       "Minimal equipment required",
@@ -33,7 +34,7 @@ const program = [
   },
   {
     title: "Group Class Program",
-    image: grpimage,
+    image: grpimage, // Local image
     details: [
       "A perfect blend of strength & cardio training to boost endurance and fitness",
       "3 live sessions + 3 customized recorded workouts for flexibility",
@@ -94,26 +95,36 @@ const program = [
 ];
 
 const Programs = () => {
-  const scrollContainer = React.useRef(null);
+  const scrollContainer = useRef(null);
   const navigate = useNavigate();
-  const [hoveredIndex, setHoveredIndex] = useState(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(0);
+  const totalImages = programData.length;
 
-  const checkScroll = () => {
+  // Track image loading progress
+  const handleImageLoad = useCallback(() => {
+    setImagesLoaded(prev => {
+      const newCount = prev + 1;
+      // Consider component loaded when at least the first 3 images are ready
+      if (newCount >= Math.min(3, totalImages)) {
+        setIsLoaded(true);
+      }
+      return newCount;
+    });
+  }, [totalImages]);
+
+  // Check if we can scroll left or right
+  const checkScroll = useCallback(() => {
     if (scrollContainer.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollContainer.current;
       setCanScrollLeft(scrollLeft > 0);
       setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10); // 10px threshold
     }
-  };
-
-  useEffect(() => {
-    checkScroll();
-    window.addEventListener('resize', checkScroll);
-    return () => window.removeEventListener('resize', checkScroll);
   }, []);
 
+  // Handle scrolling
   const scrollLeft = () => {
     if (scrollContainer.current) {
       scrollContainer.current.scrollBy({ left: -300, behavior: "smooth" });
@@ -126,14 +137,45 @@ const Programs = () => {
     }
   };
 
-  // Add scroll event listener to container
+  // Set up event listeners
   useEffect(() => {
+    checkScroll();
     const container = scrollContainer.current;
+    
     if (container) {
       container.addEventListener('scroll', checkScroll);
-      return () => container.removeEventListener('scroll', checkScroll);
+      window.addEventListener('resize', checkScroll);
+      
+      // Check if page is already loaded
+      if (document.readyState === 'complete') {
+        setIsLoaded(true);
+      } else {
+        window.addEventListener('load', () => setIsLoaded(true));
+      }
+      
+      return () => {
+        container.removeEventListener('scroll', checkScroll);
+        window.removeEventListener('resize', checkScroll);
+        window.removeEventListener('load', () => setIsLoaded(true));
+      };
     }
-  }, []);
+  }, [checkScroll]);
+
+  // Preload all images
+  useEffect(() => {
+    // Initialize an array of Image objects to preload
+    programData.forEach(program => {
+      if (typeof program.image === 'string') {
+        const img = new Image();
+        img.src = program.image;
+        img.onload = handleImageLoad;
+        img.onerror = handleImageLoad; // Count errors as loaded to prevent getting stuck
+      } else {
+        // For imported images (already loaded)
+        handleImageLoad();
+      }
+    });
+  }, [handleImageLoad]);
 
   return (
     <div className="w-full min-h-screen bg-black text-white py-12 px-4 sm:px-8 relative overflow-hidden">
@@ -141,9 +183,9 @@ const Programs = () => {
 
       <div className="relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isLoaded ? 1 : 0 }}
+          transition={{ duration: 0.4 }}
           className="text-center max-w-3xl mx-auto mb-12"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-500 mb-4">
@@ -159,12 +201,11 @@ const Programs = () => {
           <AnimatePresence>
             {canScrollLeft && (
               <motion.button
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 0.7, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                // whileHover={{ opacity: 1, scale: 1.1 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.7 }}
+                exit={{ opacity: 0 }}
                 whileTap={{ scale: 0.9 }}
-                className="absolute -left-2 top-1/2 bg-emerald-500 p-3 rounded-full shadow-lg hover:bg-emerald-600 z-20 hidden sm:block backdrop-blur-sm"
+                className="absolute -left-2 top-1/2 transform -translate-y-1/2 bg-emerald-500 p-3 rounded-full shadow-lg hover:bg-emerald-600 z-20 hidden sm:block backdrop-blur-sm"
                 onClick={scrollLeft}
               >
                 <ChevronLeft size={24} className="text-black" />
@@ -177,58 +218,39 @@ const Programs = () => {
             className="flex overflow-x-auto scroll-smooth space-x-6 p-4 scrollbar-hide"
             style={{ scrollSnapType: "x mandatory" }}
           >
-            {program.map((prog, index) => (
+            {programData.map((prog, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
-                // whileHover={{ scale: 1.05, y: -10 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: isLoaded ? 1 : 0 }}
+                transition={{ duration: 0.3, delay: isLoaded ? Math.min(0.1 * index, 0.3) : 0 }}
                 className="flex-shrink-0 w-80 sm:w-96 h-[600px] relative rounded-xl overflow-hidden shadow-2xl cursor-pointer"
                 style={{ scrollSnapAlign: "center" }}
-                onClick={() => navigate(prog.path)}
+                onClick={() => navigate(`${prog.path}#details`)}
               >
                 <div 
-                  className="absolute inset-0 bg-cover bg-center  duration-500 hover:scale-110"
+                  className="absolute inset-0 bg-cover bg-center duration-500 hover:scale-110"
                   style={{ backgroundImage: `url(${prog.image})` }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent opacity-90"></div>
                 </div>
 
-                <motion.div 
-                  className="relative h-full p-6 flex flex-col justify-end"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  <motion.h3 
-                    className="text-2xl sm:text-3xl font-bold text-emerald-400 mb-4"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.3 }}
-                  >
+                <div className="relative h-full p-6 flex flex-col justify-end">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-emerald-400 mb-4">
                     {prog.title}
-                  </motion.h3>
+                  </h3>
 
-                  <motion.ul 
-                    className="space-y-3 mb-6"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                  >
+                  <ul className="space-y-3 mb-6">
                     {prog.details.map((detail, i) => (
-                      <motion.li
+                      <li
                         key={i}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.5 + i * 0.1 }}
                         className="flex items-start text-sm text-gray-300 group"
                       >
                         <span className="text-emerald-400 mr-2 group-hover:scale-125 transition-transform">•</span>
                         {detail}
-                      </motion.li>
+                      </li>
                     ))}
-                  </motion.ul>
+                  </ul>
 
                   <motion.button
                     whileHover={{ scale: 1.05 }}
@@ -240,7 +262,7 @@ const Programs = () => {
                     Learn More
                     <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform duration-300" />
                   </motion.button>
-                </motion.div>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -248,10 +270,9 @@ const Programs = () => {
           <AnimatePresence>
             {canScrollRight && (
               <motion.button
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 0.7, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                whileHover={{ opacity: 1, scale: 1.1 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.7 }}
+                exit={{ opacity: 0 }}
                 whileTap={{ scale: 0.9 }}
                 className="absolute -right-2 top-1/2 transform -translate-y-1/2 bg-emerald-500 p-3 rounded-full shadow-lg hover:bg-emerald-600 z-20 hidden sm:block backdrop-blur-sm"
                 onClick={scrollRight}

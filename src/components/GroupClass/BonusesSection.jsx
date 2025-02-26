@@ -38,7 +38,7 @@ const BonusesSection = () => {
     <div className="bg-black text-emerald-400 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header with subtle line decoration */}
-        <div className="flex items-center gap-4 mb-12">
+        <div id="bonus" className="flex items-center gap-4 mb-12">
           <h2 className="text-4xl sm:text-5xl font-bold text-center bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent">
             Bonuses Included
           </h2>

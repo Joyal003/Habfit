@@ -57,7 +57,7 @@ const ConsultForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white px-4 py-8 md:py-12">
+    <div  className="min-h-screen bg-black text-white px-4 py-8 md:py-12">
       <div className="max-w-8xl mx-auto">
         <div
           className="md:backdrop-blur-sm border border-gray-700 rounded-2xl overflow-hidden shadow-2xl"
@@ -65,13 +65,13 @@ const ConsultForm = () => {
             backgroundImage: `
             linear-gradient(to bottom, black, rgba(0, 0, 0, 0.3), black), 
             linear-gradient(to right, black, rgba(0, 0, 0, 0.3), black), 
-            url('https://images.pexels.com/photos/4761352/pexels-photo-4761352.jpeg')`,
+            url('https://images.pexels.com/photos/2646237/pexels-photo-2646237.jpeg')`,
             backgroundSize: "cover",
             backgroundPosition: "top center",
             backgroundBlendMode: "overlay",
           }}
         >
-          <div className="w-full bg-gradient-to-r from-emerald-900/50 to-emerald-900/50 p-6 md:p-8">
+          <div id="register" className="w-full bg-gradient-to-r from-emerald-900/50 to-emerald-900/50 p-6 md:p-8">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
               Submit Details for Free Consultation
             </h1>
@@ -110,7 +110,7 @@ const ConsultForm = () => {
                   </p>
                 </div>
 
-                <div className="p-6 bg-gradient-to-r from-green-900/20 to-emerald-900/30 rounded-xl">
+                <div className="p-10  bg-gradient-to-r from-green-900/20 to-gray-900 rounded-xl">
                   <p className="text-red-700 text-2xl font-bold">
                     Register now for FREE bonuses worth ₹3,500!
                   </p>

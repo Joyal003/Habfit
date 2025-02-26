@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-const FitnessForm = () => {
+const RegistrationSection = () => {
   const [formData, setFormData] = useState({
     fullName: "",
     phoneNumber: "",
     email: "",
   });
 
-  const [timeLeft, setTimeLeft] = useState(620); // 1 hr 59 min 53 sec
+  const [timeLeft, setTimeLeft] = useState(620);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -35,98 +35,156 @@ const FitnessForm = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen bg-black text-white p-6">
-      {/* Left Side Content */}
-      <div className="w-full lg:w-1/2 text-center lg:text-left">
-        <h1 className="text-4xl lg:text-5xl font-bold text-green-400 mb-4">
-          Your Postpartum Fitness Journey Starts Here
-        </h1>
-        <h2 className="text-2xl font-bold text-green-300 mb-6">
-          Submit Your Details
-        </h2>
-
-        <p className="text-lg mb-4">
-          <strong className="text-white">Step 1: Free Consultation:</strong> Schedule a one-on-one consultation with our experts to discuss your goals and challenges.
-        </p>
-        <p className="text-lg mb-4">
-          <strong className="text-white">Step 2: Personalized Plan:</strong> Receive a tailored fitness and nutrition plan that aligns with your lifestyle.
-        </p>
-        <p className="text-lg mb-6">
-          <strong className="text-white">Step 3: Progress & Support:</strong> Enjoy ongoing support, regular check-ins, and adjustments to your plan as you progress.
-        </p>
-
-        <p className="text-2xl font-semibold">
-          Price for you: <span className="text-white font-bold">2999/-</span>
-        </p>
-        <p className="text-xl line-through text-red-500">
-          Normal Price: <span className="text-gray-400">8000/-</span>
-        </p>
-        <p className="text-red-500 text-lg font-bold mt-2">
-          Register Today To Unlock Bonuses For FREE Worth RS 3500/-
-        </p>
-      </div>
-
-      {/* Right Side Form + Timer */}
-      <div className="w-full lg:w-1/2 flex flex-col items-center mt-8 lg:mt-0">
-        {/* Form */}
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md"
+    <div className="min-h-screen bg-black text-white px-4 py-8 md:py-12">
+      <div className="max-w-8xl mx-auto">
+        {/* Main Container */}
+        <div
+          className="md:backdrop-blur-sm border border-gray-700 rounded-2xl overflow-hidden shadow-2xl"
+          style={{
+            backgroundImage: `
+            linear-gradient(to bottom, black, rgba(0, 0, 0, 0.3), black), 
+            linear-gradient(to right, black, rgba(0, 0, 0, 0.3), black), 
+            url('https://images.pexels.com/photos/4761352/pexels-photo-4761352.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')`,
+            backgroundSize: "cover",
+            backgroundPosition: "top center",
+            backgroundBlendMode: "overlay",
+          }}
         >
-          <label className="block text-black font-medium mb-1">
-            Full Name <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            name="fullName"
-            value={formData.fullName}
-            onChange={handleChange}
-            required
-            className="w-full mb-4 p-3 border text-black  border-gray-300 rounded"
-          />
+          {/* Header Section */}
+          <div className="w-full bg-gradient-to-r from-emerald-900/50 to-emerald-900/50 p-6 md:p-8">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
+              Your Journey to Healthier Starts Here
+            </h1>
+          </div>
 
-          <label className="block text-black font-medium mb-1">
-            Phone Number <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="tel"
-            name="phoneNumber"
-            value={formData.phoneNumber}
-            onChange={handleChange}
-            required
-            className="w-full mb-4 p-3 border text-black border-gray-300 rounded"
-          />
+          {/* Content Container */}
+          <div className="flex flex-col lg:flex-row p-6 md:p-8 gap-8">
+            {/* Left Side Content */}
+            <div className="w-full lg:w-1/2">
+              <div className="space-y-6">
+                <div className="bg-black/30 p-4 rounded-lg">
+                  <p className="text-lg mb-2">
+                    <span className="text-green-400 font-semibold">Step 1:</span>{" "}
+                    Free Consultation
+                  </p>
+                  <p className="text-gray-300">
+                    Schedule a one-on-one consultation with our experts to discuss your goals.
+                  </p>
+                </div>
 
-          <label className="block text-black font-medium mb-1">
-            Email Address <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="w-full mb-6 p-3 border text-black border-gray-300 rounded"
-          />
+                <div className="bg-black/30 p-4 rounded-lg">
+                  <p className="text-lg mb-2">
+                    <span className="text-green-400 font-semibold">Step 2:</span>{" "}
+                    Personalized Plan
+                  </p>
+                  <p className="text-gray-300">
+                    Receive a tailored fitness and nutrition plan for your lifestyle.
+                  </p>
+                </div>
 
-          <button
-            type="submit"
-            className="w-full  bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg"
-          >
-            Submit
-          </button>
-        </form>
+                <div className="bg-black/30 p-4 rounded-lg">
+                  <p className="text-lg mb-2">
+                    <span className="text-green-400 font-semibold">Step 3:</span>{" "}
+                    Progress & Support
+                  </p>
+                  <p className="text-gray-300">
+                    Enjoy ongoing support and regular plan adjustments as you progress.
+                  </p>
+                </div>
 
-        {/* Countdown Timer - Positioned Directly Below the Form */}
-        <div className="mt-6 text-center border rounded-lg p-2  border-neutral-400">
-          <p className="text-lg font-semibold text-white">PRICE INCREASE IN</p>
-          <p className="text-red-500 text-3xl font-bold bg-black px-6 py-2 rounded-lg">
-            {formatTime(timeLeft)}
-          </p>
+                <div className="p-6 bg-gradient-to-r from-green-900/20 to-emerald-900/20 rounded-xl">
+                  <p className="text-2xl font-semibold mb-2">
+                    Price for you: <span className="text-green-400 font-bold">₹2,999/-</span>
+                  </p>
+                  <p className="text-lg line-through text-red-600 mb-2">
+                    Normal Price: <span>₹8,000</span>
+                  </p>
+                  <p className="text-red-700 text-2xl font-bold">
+                    Register now for FREE bonuses worth ₹3,500!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side Form */}
+            <div id="register" className="w-full lg:w-1/2">
+              <div className="bg-black/40 md:backdrop-blur-sm  rounded-xl p-6">
+                <h2 className="text-xl md:text-2xl font-bold text-center text-green-400 mb-6">
+                  Register Now
+                </h2>
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <label className="block text-green-400 font-medium mb-2">
+                      Full Name <span className="text-red-400">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      required
+                      className="w-full p-3 bg-black border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all"
+                      placeholder="Enter your full name"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-green-400 font-medium mb-2">
+                      Phone Number <span className="text-red-400">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      name="phoneNumber"
+                      value={formData.phoneNumber}
+                      onChange={handleChange}
+                      required
+                      className="w-full p-3 bg-black border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all"
+                      placeholder="Enter your phone number"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-green-400 font-medium mb-2">
+                      Email Address <span className="text-red-400">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full p-3 bg-black border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all"
+                      placeholder="Enter your email address"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-4 rounded-lg transform transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg"
+                  >
+                    Register Now
+                  </button>
+                </form>
+
+                {/* Timer */}
+                <div className="mt-8 text-center">
+                  <div className="inline-block bg-black/50 rounded-xl p-4">
+                    <p className="text-lg font-semibold text-red-400 mb-2">
+                      OFFER EXPIRES IN
+                    </p>
+                    <p className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+                      {formatTime(timeLeft)}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default FitnessForm;
+export default RegistrationSection;

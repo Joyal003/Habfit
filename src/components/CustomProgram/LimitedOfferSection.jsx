@@ -1,11 +1,11 @@
 import React from "react";
+import { Link } from "react-scroll";
 
 const LimitedOfferSection = () => {
   return (
     <div className="bg-black text-white py-16 px-5 sm:px-20 flex flex-col md:flex-row items-center justify-center gap-10">
       {/* Flex container to ensure equal height */}
       <div className="flex flex-col md:flex-row items-stretch w-full max-w-6xl gap-16">
-        
         {/* Left: Image with Increased Width */}
         <div className="relative w-full md:w-4/5 bg-gray-900 rounded-2xl flex-1">
           <img
@@ -21,9 +21,9 @@ const LimitedOfferSection = () => {
             Don’t Miss Out – Limited Spots Available!
           </h2>
           <p className="text-lg text-center mt-4">
-            Our customized fitness programs are currently offered at an exclusive
-            discounted price. We only accept a limited number of clients each
-            month to ensure personalized attention.
+            Our customized fitness programs are currently offered at an
+            exclusive discounted price. We only accept a limited number of
+            clients each month to ensure personalized attention.
           </p>
           <p className="text-lg text-center mt-2">
             Take action now to secure your spot and start your journey to a
@@ -33,12 +33,13 @@ const LimitedOfferSection = () => {
 
           {/* CTA Button */}
           <div className="flex justify-center mt-6">
-            <button className="bg-green-500 text-black font-bold py-3 px-6 rounded-full text-lg hover:bg-green-600 transition">
-              GRAB OFFER
-            </button>
+            <Link to="bonus" smooth={true} duration={400}>
+              <button className="bg-green-500 text-black font-bold py-3 px-6 rounded-full text-lg hover:bg-green-600 transition">
+                GRAB OFFER
+              </button>
+            </Link>
           </div>
         </div>
-
       </div>
     </div>
   );
